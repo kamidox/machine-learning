@@ -156,9 +156,37 @@ def plot_pie(fname='../pie_plot.png', dpi=200):
     z = np.ones(n)
     z[-1] *= 2
 
-    pl.axes([0.025, 0.025, 0.95, 0.95])
+    pl.axes([0.1, 0.1, 0.8, 0.8])
     pl.xticks(())
     pl.yticks(())
-
-    pl.pie(z, colors=['%f' % (i / float(n)) for i in range(n)])
+    pl.axis('equal')
+    pl.pie(z, explode=z * 0.05, colors=['%f' % (i / float(n)) for i in range(n)])
     pl.savefig(fname, dpi=dpi)
+
+
+def plot_quiver(fname='../quiver_plot', dpi=200):
+    pl.clf()
+    n = 12
+    X, Y = np.mgrid[0:n, 0:n]
+    t = np.arctan2(Y - n / 2., X - n / 2.)
+    radius = 10 + np.sqrt((Y - n / 2.0) ** 2 + (X - n / 2.0) ** 2)
+    U, V = radius * np.cos(t), radius * np.sin(t)
+
+    pl.axes([0.025, 0.025, 0.95, 0.95])
+    pl.quiver(X, Y, U, V, radius, alpha=.5)
+    pl.quiver(X, Y, U, V, edgecolor='red', facecolor='None', linewidth=.5)
+
+    pl.xlim(-1, n)
+    pl.xticks(())
+    pl.ylim(-1, n)
+    pl.yticks(())
+
+    pl.savefig(fname, dpi=dpi)
+
+
+def main():
+    # plot_pie()
+    plot_quiver()
+
+if __name__ == '__main__':
+    main()

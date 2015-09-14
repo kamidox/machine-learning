@@ -59,4 +59,5 @@ docs/_build/
 * Image output files
 *.png
 *.jpg
+.idea
 
