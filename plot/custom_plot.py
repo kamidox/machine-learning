@@ -3,8 +3,9 @@ import pylab as pl
 import numpy as np
 
 
-def plot(fname='../custom_plot.png', dpi=200):
+def plot_basic(fname='../custom_plot.png', dpi=200):
     # custom figure size in inches and dpi
+    pl.clf()
     pl.figure(figsize=(8, 6), dpi=dpi)
 
     # create subplot from a grid of 1x1
@@ -58,4 +59,106 @@ def plot(fname='../custom_plot.png', dpi=200):
               r'$\pi/2$', r'$\pi$'])
     pl.yticks(np.linspace(-1.0, 1.0, 5, endpoint=True))
 
-    pl.savefig('../custom_plot.png', dpi=dpi)
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_regular(fname='../regular_plot.png', dpi=200):
+    pl.clf()
+    n = 265
+    x = np.linspace(-np.pi, np.pi, n, endpoint=True)
+    y = np.sin(2 * x)
+    pl.plot(x, y + 1, color='blue')
+    pl.plot(x, y - 1, color='blue')
+    pl.fill_between(x, 1, y + 1, color='blue', alpha=0.2)
+    pl.fill_between(x, -1, y - 1, where=(y - 1) > -1, color='blue', alpha=0.2)
+    pl.fill_between(x, -1, y - 1, where=(y - 1) < -1, color='red', alpha=0.2)
+
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_scatter(fname='../scatter_plot.png', dpi=200):
+    pl.clf()
+    n = 1024
+    x = np.random.normal(0, 1, n)
+    y = np.random.normal(0, 1, n)
+    c = np.arctan(y / x)
+    pl.scatter(x, y, s=30, c=c, alpha=0.5)
+
+    pl.xticks(())
+    pl.yticks(())
+    pl.xlim(-1.8, 1.8)
+    pl.ylim(-1.8, 1.8)
+
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_bar(fname='../bar_plot.png', dpi=200):
+    pl.clf()
+    n = 12
+    x = np.arange(n)
+    y1 = (1 - x / float(n)) * np.random.uniform(0.5, 1.0, n)
+    y2 = (1 - x / float(n)) * np.random.uniform(0.5, 1.0, n)
+
+    pl.bar(x, y1, facecolor='#9999ff', edgecolor='white')
+    pl.bar(x, -y2, facecolor='#ff9999', edgecolor='white')
+
+    for i, j in zip(x, y1):
+        pl.text(i + 0.4, j + 0.05, '%.2f' % j, ha='center', va='bottom', fontsize=9)
+
+    for i, j in zip(x, -y2):
+        pl.text(i + 0.4, j - 0.05, '%.2f' % j, ha='center', va='top', fontsize=9)
+
+    pl.xlim(-1, 13)
+    pl.ylim(-1.25, 1.25)
+    pl.xticks(())
+    pl.yticks(())
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_contour(fname='../contour_plot.png', dpi=200):
+    def f(x, y):
+        return (1 - x / 2 + x ** 5 + y ** 3) * np.exp(-x ** 2 - y ** 2)
+
+    pl.clf()
+    n = 256
+    x = np.linspace(-3, 3, n)
+    y = np.linspace(-3, 3, n)
+    mx, my = np.meshgrid(x, y)
+
+    pl.contourf(mx, my, f(mx, my), 8, alpha=0.75, cmap=pl.cm.hot)
+    c = pl.contour(mx, my, f(mx, my), 8, colors='black', linewidth=0.5)
+    pl.clabel(c, fontsize=9)
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_imshow(fname='../imshow_plot.png', dpi=200):
+    def f(x, y):
+        return (1 - x / 2 + x ** 5 + y ** 3) * np.exp(-x ** 2 - y ** 2)
+
+    pl.clf()
+    n = 10
+    x = np.linspace(-3, 3, 3.5 * n)
+    y = np.linspace(-3, 3, 3 * n)
+    X, Y = np.meshgrid(x, y)
+
+    pl.axes([0.025, 0.025, 0.95, 0.95])
+    pl.xticks(())
+    pl.yticks(())
+
+    pl.imshow(f(X, Y), interpolation='nearest', origin='lower', cmap=pl.cm.gray)
+    pl.colorbar(shrink=0.92)
+    pl.savefig(fname, dpi=dpi)
+
+
+def plot_pie(fname='../pie_plot.png', dpi=200):
+    pl.clf()
+    n = 20
+    z = np.ones(n)
+    z[-1] *= 2
+
+    pl.axes([0.025, 0.025, 0.95, 0.95])
+    pl.xticks(())
+    pl.yticks(())
+
+    pl.pie(z, colors=['%f' % (i / float(n)) for i in range(n)])
+    pl.savefig(fname, dpi=dpi)
