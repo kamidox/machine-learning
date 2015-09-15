@@ -164,7 +164,7 @@ def plot_pie(fname='../pie_plot.png', dpi=200):
     pl.savefig(fname, dpi=dpi)
 
 
-def plot_quiver(fname='../quiver_plot', dpi=200):
+def plot_quiver(fname='../quiver_plot.png', dpi=200):
     pl.clf()
     n = 12
     X, Y = np.mgrid[0:n, 0:n]
@@ -184,9 +184,30 @@ def plot_quiver(fname='../quiver_plot', dpi=200):
     pl.savefig(fname, dpi=dpi)
 
 
+def plot_3d(fname='../3d_plot.png', dpi=200):
+    from mpl_toolkits.mplot3d import Axes3D
+
+    pl.clf()
+    fig = pl.figure()
+    ax = Axes3D(fig)
+    x = np.arange(-4, 4, 0.25)
+    y = np.arange(-4, 4, 0.25)
+    x, y = np.meshgrid(x, y)
+    r = np.sqrt(x ** 2 + y ** 2)
+    z = np.sin(r)
+
+    print(ax.contourf.__doc__)
+    ax.plot_surface(x, y, z, rstride=1, cstride=1, cmap=pl.cm.hot)
+    ax.contourf(x, y, z, zdir='z', offset=-2, cmap=pl.cm.hot)
+    ax.set_zlim(-2, 2)
+
+    pl.savefig(fname, dpi=dpi)
+
+
 def main():
     # plot_pie()
-    plot_quiver()
+    # plot_quiver()
+    plot_3d()
 
 if __name__ == '__main__':
     main()
