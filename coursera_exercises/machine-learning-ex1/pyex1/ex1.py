@@ -20,7 +20,7 @@ def gradient_descent(x, y, theta, alpha, iterations):
     m = len(y)
     cost_history = sp.zeros((iterations, 1))
     n = len(theta)
-    new_theta = sp.zeros((2, 1))
+    new_theta = sp.zeros((n, 1))
     for loop in range(iterations):
         new_theta = theta
         delta = sp.dot(x, theta) - y
@@ -33,7 +33,31 @@ def gradient_descent(x, y, theta, alpha, iterations):
     return theta, cost_history
 
 
+def feature_normalize(x):
+    """ normalized_value = (x_i - mean(x)) / (max(x) - min(x)) or
+        normalized_value = (x_i - mean(x)) / numpy.std(x)
+    """
+    n = x.shape[1]
+    mu = sp.zeros((n, 1))
+    sigma = sp.zeros((n, 1))
+
+    for i in range(n):
+        mu[i] = sp.mean(x[:, i])
+        sigma[i] = sp.std(x[:, i])
+        x[:, i] = (x[:, i] - mu[i]) / sigma[i]
+
+    return x, mu, sigma
+
+
+def normal_equation(x, y):
+    """ normal equation: theta = (X.T * X)^(-1) * X.T * y """
+
+    theta = sp.dot(sp.dot(sp.mat(sp.dot(x.T, x)).I, x.T), y)
+    return theta.reshape(x.shape[1], 1)
+
+
 def main():
+    # =============== Part 1: Gradient Descent with one variable =============
     # =============== Step 1: Plotting data =================
     print('Plotting data ...')
     data = sp.loadtxt('../ex1/ex1data1.txt', delimiter=',')
@@ -64,7 +88,7 @@ def main():
     predict2 = sp.dot(sp.array([1, 7]), theta)
     print('For population = 70,000, we predict a profit of %f' % (predict2 * 10000))
 
-    # ============= Part 4: Visualizing J(theta_0, theta_1) =============
+    # ============= Step 3: Visualizing J(theta_0, theta_1) =============
     print('Visualizing J(theta_0, theta_1) ...')
 
     # Grid over which we will calculate J
@@ -91,7 +115,68 @@ def main():
     pl.xlabel(r'$\theta_0$')
     pl.ylabel(r'$\theta_1$')
     pl.scatter(theta[0], theta[1], s=50, c='r', marker='x')
+    # pl.show()
+
+    # ============= Part 2: Gradient Descent with multi variables =============
+    # ============= Step 1: Feature Normalization =============
+    print('Part 2: Gradient Descent with multi variables')
+    data = sp.loadtxt('../ex1/ex1data2.txt', delimiter=',')
+    print('Step1: Feature Normalization ...')
+    x = data[:, range(2)]
+    y = data[:, 2]
+    m = len(y)
+    (x, mu, sigma) = feature_normalize(x)
+
+    # ============= Step 2: Gradient Descent on multi variables =============
+    print('Step2: Running gradient descent for multi variables')
+    # add intercept term to x
+    x = sp.column_stack((sp.ones((m, 1)), x))
+    alpha = 0.0001
+    iterations = 400
+    theta = sp.zeros((3, 1))
+    (theta, j_history) = gradient_descent(x, y, theta, alpha, iterations)
+    # print result
+    print('Theta compute from gradient descent: \n%s' % theta)
+
+    # Predicted price of a 1650 sq-ft, 3 br house
+    hourse = sp.array([1, (1650 - mu[0]) / sigma[0], (3 - mu[1]) / sigma[1]])
+    price = sp.dot(hourse, theta)
+    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent): %s' % price)
+
+    # ============= Step 3: Plot the convergence graph =============
+    alpha1 = 0.0003
+    theta1 = sp.zeros((3, 1))
+    (theta1, j_history1) = gradient_descent(x, y, theta1, alpha1, iterations)
+    alpha2 = 0.001
+    theta2 = sp.zeros((3, 1))
+    (theta2, j_history2) = gradient_descent(x, y, theta2, alpha2, iterations)
+    print('Step 3: Plot the convergence graph')
+    pl.clf()
+    pl.plot(range(len(j_history)), j_history, c='r')
+    pl.plot(range(len(j_history1)), j_history1, c='g')
+    pl.plot(range(len(j_history2)), j_history2, c='b')
+    pl.legend(['alpha=0.0001', 'alpha=0.0003', 'alpha=0.001'])
+    pl.xlabel('Number of iterations')
+    pl.ylabel('Cost')
     pl.show()
+
+    # ============= Step 4: Using Normal Equation =============
+    print('Step 4: Using Normal Equation')
+    data = sp.loadtxt('../ex1/ex1data2.txt', delimiter=',')
+    print('Step1: Feature Normalization ...')
+    x = data[:, range(2)]
+    y = data[:, 2]
+    m = len(y)
+    x = sp.column_stack((sp.ones((m, 1)), x))
+
+    # Calculate the parameters from the normal equation
+    theta = normal_equation(x, y)
+    print('Theta computed from the normal equations: \n%s' % theta)
+
+    # Estimate the price of a 1650 sq-ft, 3 br house
+    hourse = sp.array([1, 1650, 3])
+    price = hourse * theta
+    print('Predicted price of a 1650 sq-ft, 3 br house (using normal equations):\n%s' % price)
 
 if __name__ == '__main__':
     main()

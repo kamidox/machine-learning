@@ -8,7 +8,6 @@ m = length(y); % number of training examples
 J_history = zeros(num_iters, 1);
 
 n = length(theta);
-
 for iter = 1:num_iters
 
     % ====================== YOUR CODE HERE ======================
