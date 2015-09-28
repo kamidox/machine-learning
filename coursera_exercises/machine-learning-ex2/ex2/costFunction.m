@@ -7,7 +7,7 @@ function [J, grad] = costFunction(theta, X, y)
 % Initialize some useful values
 m = length(y); % number of training examples
 
-% You need to return the following variables correctly 
+% You need to return the following variables correctly
 J = 0;
 grad = zeros(size(theta));
 
@@ -20,12 +20,18 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% Compute cost for given theta
+% dimensions of theta: (n + 1) x 1; dimensions of X: (n + 1) x m
+z = X * theta;      % dimensions of z: m x 1
+g = sigmoid(z);     % compute predictions by using Sigmoid Function, dimensions of g: m x 1
 
+J = sum(- y .* log(g) - (1 - y) .* log(1 - g)) / m;
 
-
-
-
-
+% Compute partial derivatives of the Cost Function for each theta
+n = size(theta, 1);
+for j = 1:n
+    grad(j) = sum((g - y) .* X(:, j)) / m;
+end
 
 % =============================================================
 
