@@ -21,7 +21,7 @@ grad = zeros(size(theta));
 %
 
 % Compute cost for given theta
-% dimensions of theta: (n + 1) x 1; dimensions of X: (n + 1) x m
+% dimensions of X: m x (n + 1); dimensions of theta: (n + 1) x 1;
 z = X * theta;      % dimensions of z: m x 1
 g = sigmoid(z);     % compute predictions by using Sigmoid Function, dimensions of g: m x 1
 
