@@ -95,8 +95,47 @@ reg = lambda * reg / (2 * m);
 J = J + reg;
 
 
-% -------------------------------------------------------------
+% -----------------------------------------------------------------------
+% Use Backpropagation to compute partial derivate terms of cost function
 
+Delta1 = 0;
+Delta2 = 0;
+for i = 1:m
+    % step 1: compute activations for each layer using traning example x(i)
+    a1 = [1; X(i, :)'];     % add bias unit, size(a1) = (input_layer_size + 1) x 1
+    z2 = Theta1 * a1;       % size(z2) = hidden_layer_size  x 1
+    a2 = sigmoid(z2);
+    a2 = [1; a2];           % add bias unit, size(a2) = (hidden_layer_size + 1) x 1
+    z3 = Theta2 * a2;       % size(z3) = num_labels x 1
+    a3 = sigmoid(z3);       % h(x) = a3, size(a3) = num_labels x 1
+
+    % step 2: compute delta terms for output layer
+    yi = zeros(num_labels, 1);
+    yi(y(i)) = 1;
+    d3 = a3 - yi;           % size(d3) = num_labels x 1
+
+    % step 3: compute hidden layer's delta terms using back propagation
+    % size(Theta2') = (hidden_layer_size + 1) x num_labels; size(d3) = num_labels x 1
+    % size(Theta2' * d3) = (hidden_layer_size + 1) x 1; size(z2) = hidden_layer_size  x 1
+    d2 = (Theta2' * d3)(2:end) .* sigmoidGradient(z2);     % size(d2) = hidden_layer_size x 1
+
+    % step 4: accumulate the gradient from this traning example
+    Theta2_grad = Theta2_grad + d3 * a2';       % size(d3 * a2') = num_labels x (hidden_layer_size + 1)
+    Theta1_grad = Theta1_grad + d2 * a1';       % size(d2 * a1') = hidden_layer_size x (input_layer_size + 1)
+end
+
+% step 5: divide accumulate gradient to m
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
+
+% compute the regularized terms of gradient
+t1 = Theta1;
+t1(:, 1) = 0;
+Theta1_grad = Theta1_grad + (lambda / m) .* t1;
+
+t2 = Theta2;
+t2(:, 1) = 0;
+Theta2_grad = Theta2_grad + (lambda / m) .* t2;
 % =========================================================================
 
 % Unroll gradients
