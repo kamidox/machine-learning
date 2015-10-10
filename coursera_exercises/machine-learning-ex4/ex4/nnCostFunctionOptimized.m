@@ -63,6 +63,7 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 for i = 1:m
+    % step 1: compute activations for each layer using traning example x(i)
     a1 = [1; X(i, :)'];     % add bias unit, size(a1) = (input_layer_size + 1) x 1
     z2 = Theta1 * a1;       % size(z2) = hidden_layer_size x 1
     a2 = sigmoid(z2);
@@ -72,45 +73,12 @@ for i = 1:m
 
     yi = zeros(num_labels, 1);
     yi(y(i)) = 1;
+
+    % compute cost
     cost = sum(-yi .* log(a3) - (1 - yi) .* log(1 - a3));
     J = J + cost;
-end
-J = J / m;
-
-% compute regularization
-reg = 0;
-for i = 1:hidden_layer_size
-    for j = 2:(input_layer_size + 1)    % bias do not regularization
-        reg = reg + Theta1(i, j) ** 2;
-    end
-end
-
-for i = 1:num_labels
-    for j = 2:(hidden_layer_size + 1)   % bias do not regularization
-        reg = reg + Theta2(i, j) ** 2;
-    end
-end
-reg = lambda * reg / (2 * m);
-
-J = J + reg;
-
-% -----------------------------------------------------------------------
-% Use Backpropagation to compute partial derivate terms of cost function
-
-Delta1 = 0;
-Delta2 = 0;
-for i = 1:m
-    % step 1: compute activations for each layer using traning example x(i)
-    a1 = [1; X(i, :)'];     % add bias unit, size(a1) = (input_layer_size + 1) x 1
-    z2 = Theta1 * a1;       % size(z2) = hidden_layer_size  x 1
-    a2 = sigmoid(z2);
-    a2 = [1; a2];           % add bias unit, size(a2) = (hidden_layer_size + 1) x 1
-    z3 = Theta2 * a2;       % size(z3) = num_labels x 1
-    a3 = sigmoid(z3);       % h(x) = a3, size(a3) = num_labels x 1
 
     % step 2: compute delta terms for output layer
-    yi = zeros(num_labels, 1);
-    yi(y(i)) = 1;
     d3 = a3 - yi;           % size(d3) = num_labels x 1
 
     % step 3: compute hidden layer's delta terms using back propagation
@@ -135,6 +103,17 @@ Theta1_grad = Theta1_grad + (lambda / m) .* t1;
 t2 = Theta2;
 t2(:, 1) = 0;
 Theta2_grad = Theta2_grad + (lambda / m) .* t2;
+
+% =========================================================================
+% Compute cost
+J = J / m;
+% compute regularization
+reg = 0;
+reg += sum(sum(t1 .^ 2));
+reg += sum(sum(t2 .^ 2));
+reg = lambda * reg / (2 * m);
+J = J + reg;
+
 % =========================================================================
 
 % Unroll gradients
