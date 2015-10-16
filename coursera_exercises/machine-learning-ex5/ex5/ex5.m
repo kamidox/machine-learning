@@ -218,3 +218,15 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% =========== Part 9: Compute error on test data for best lambda =============
+
+[min_error_val, min_error_idx] = min(error_val);
+lambda_best = lambda_vec(min_error_idx);
+[theta] = trainLinearReg(X_poly, y, lambda_best);
+J_test = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+fprintf('The best lambda automatically selected: %f\n', lambda_best);
+fprintf('Error for test data on the best lambda automatically selected: %f\n', J_test);
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
