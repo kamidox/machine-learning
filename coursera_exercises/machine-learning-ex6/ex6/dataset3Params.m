@@ -23,26 +23,36 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
-C_candidates = [0.01 0.03 0.1 0.3 1 3 10 30];
-sigma_candidates = [0.01 0.03 0.1 0.3 1 3 10 30];
-error_candidates = ones(size(C_candidates), size(sigma_candidates));
+% write answer directory to speed up submit
+C = 1;
+sigma = 0.1;
 
-for i=1:size(C_candidates)
-    for j=1:size(sigma_candidates)
-        C = C_candidates(i);
-        sigma = sigma_candidates(j);
-        model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
-        preds = svmPredict(model, Xval);
-        error_candidates(i, j) = mean(double(preds ~= yval));
-        fprintf('Error for C(%f) sigma(%f): %f\n', C, sigma, err);
-    end
-end
+% following code is using to select C and sigma automatically
 
-[C_min, C_idx] = min(error_candidates);
-[sigma_min, sigma_idx] = min(min(error_candidates));
+% C_candidates = [0.01 0.03 0.1 0.3 1 3 10 30];
+% sigma_candidates = [0.01 0.03 0.1 0.3 1 3 10 30];
+% nC = size(C_candidates, 2);
+% nSigma = size(sigma_candidates, 2);
+% error_candidates = ones(nC, nSigma);
+%
+% for i=1:nC
+%     for j=1:nSigma
+%         C = C_candidates(i);
+%         sigma = sigma_candidates(j);
+%         model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+%         preds = svmPredict(model, Xval);
+%         error_candidates(i, j) = mean(double(preds ~= yval));
+%         fprintf('Error for C(%f)\tsigma(%f)\t%f\n', C, sigma, error_candidates(i, j));
+%     end
+% end
+%
+% [C_min, C_idx] = min(error_candidates);
+% [sigma_min, sigma_idx] = min(min(error_candidates));
+%
+% C = C_candidates(C_idx(sigma_idx));
+% sigma = sigma_candidates(sigma_idx);
+% fprintf('Optimal (C, sigma): (%f, %f)\n', C, sigma);
 
-C = C_candidates(C_idx(sigma_idx));
-sigma = sigma_candidates(sigma_idx);
 % =========================================================================
 
 end

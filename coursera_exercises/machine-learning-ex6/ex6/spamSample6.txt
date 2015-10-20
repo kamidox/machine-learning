@@ -1,0 +1,53 @@
+Explore this week on GitHub
+Here's what is happening on GitHub the week of Oct 13 - Oct 20
+
+Trending repositories this week
+
+basecamp/trix
+CoffeeScript
+A rich text editor for everyday writing
+1,390
+
+gabrielbull/react-desktop
+JavaScript
+React UI Components for OS X El Capitan and Windows 10
+942
+
+ipselon/structor
+JavaScript
+User interface builder for React
+512
+
+jwagner/smartcrop.js
+JavaScript
+Content aware image cropping
+436
+
+herrbischoff/awesome-osx-command-line
+Use your OS X terminal shell to do awesome things.
+388
+ Starred by people you follow this week
+
+elevenetc/TextSurface
+Java
+A little animation framework which could help you to show message in a nice looking way
+2
+
+linemanjs/lineman
+CoffeeScript
+Lineman helps you build fat-client JavaScript apps. It produces happiness by building assets, mocking servers, running specs on every file change
+1
+
+danilop/LambdAuth
+JavaScript
+A sample authentication service implemented with a server-less architecture, using AWS Lambda to host and execute the code and Amazon DynamoDB as persistent storage. This provides a cost-efficient solution that is scalable and highly available and can be used with Amazon Cognito for Developer Authenticated Identities.
+1
+
+jgm/pandoc
+Haskell
+Universal markup converter
+1
+
+kaelaela/VerticalViewPager
+Java
+Vertically ViewPager and vertically transformer for Android.

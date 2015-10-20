@@ -1,0 +1,42 @@
+
+Deal of the Day
+For 24 Hours, get this selection of
+hand-picked titles at half price!
+
+$27.99
+
+$14.00
+
+Clojure High Performance Programming - Second Edition
+Don't miss this brand new edition of Clojure High Performance Programming, updated and improved with the latest features of Clojure 1.7. Emphasizing the importance of design in how you handle and organize code and construct applications, this book breaks down the process of evaluation, optimization and measurement, so you can focus on continuous improvement when working with Clojure.
+
+Did You Know?
+Analysis performed between 2013 and 2014 found that Clojure developers are the happiest of all developers... Tobias Hermann, a German data analyst, analysed data from programming language subreddits and found that comments in the Clojure subreddit featuring words indicating positivity.
+
+
+Clojure Reactive Programming
+Develop reliable and powerful concurrent applications with reactive programming, with this guide created for Clojure developers. Rethink Clojure and unlock new techniques and ideas to solve a wide range of modern computing problems. Featuring guidance on integrating a number of frameworks with Clojure, this book will help you unlock a more effective approach to developing with Clojure.
+$35.99  $18.00
+
+
+Clojure Web Development Essentials
+Clojure is a great language for web development - as a functional language it elegantly brings together impressive performance with rapid development. With Luminus - the Clojure micro-framework, it's simple - find out how with this practical book, which takes you through every stage in the development process - from templates to testing all the way through to deployment!
+$26.99  $13.50
+
+
+Clojure for Data Science
+If Clojure's great for web development, it's equally useful for data science! Discover how Clojure can help you tackle data science problems - whether you're interested in statistical models and machine learning or visualization, this book shows you how to harness Clojure in a new way, that might well produce surprising and unique results...
+$35.99  $18.00
+
+
+Keep up to date on all our latest offers
+Follow Us
+
+Contact us
+contact@packtpub.com
+www.packtpub.com
+Other Information
+FAQ | Contact Us | Delivery Information | Unsubscribe
+This email was sent to kamidox@qq.com by Packt Publishing Limited whose Registered Office is at 2nd Floor 35 Livery Street, Birmingham, West Midlands B3 2PB; Company No. 04759694 (England).
+
+We respect your privacy and you may unsubscribe at any time by clicking here.
