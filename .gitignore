@@ -60,4 +60,4 @@ docs/_build/
 *.png
 *.jpg
 .idea
-
+notebooks/.ipynb_checkpoints
